@@ -1,0 +1,91 @@
+#!/usr/bin/python
+
+from sys import exit
+
+try:
+    while True:
+        myList = open('/Volumes/GFX2/Graphics/MISC/Lists/FileList_Cct.txt', 'r')
+        print("Please enter your search term (CTL-C to quit):")
+        searchTerm = raw_input("> ")
+        
+        # search (and print for now)
+        
+        checkDir = False
+        count=0
+        big2DList=[]
+        tmpList=[]
+        SEPARATOR_TOP = "________________________________________\n"
+        SEPARATOR_BOT = "\n"
+        
+        
+        for line in myList:
+            
+            # find out if line is a directory
+            if line.startswith("/"):
+                
+                # remove ":" from end of directory listing
+                dirTmp = SEPARATOR_TOP + line.replace(":\n", "") + SEPARATOR_BOT
+                # dirTMP gets added to the top of the big2DList 
+            
+                # set checkDir flag so directory is included in the list
+                # if search term found
+                checkDir = True
+                
+                
+            # 
+            elif line.lower().find(searchTerm.lower()) > -1 :
+                
+                # only adds directory if it's the first time through
+                if checkDir:
+                    
+                    # Append all matching items found in previous directory
+                    big2DList.append(tmpList)
+                    
+                    # Clear list of matching items
+                    tmpList=[]
+                    
+                    # Start tmpList over with next Dir at the top
+                    tmpList.append(dirTmp)
+                    
+                    # Clear checkDir flag
+                    checkDir = False
+                    
+                count +=1
+                # without count:
+                # tmpList.append(line)
+                # to add count:
+                tmpList.append(str(count)+" " + line.rstrip('\n'))
+                
+            else:
+                pass
+        myList.close()
+        
+        #######################
+        big2DList.append(tmpList) # add last match to the big list
+        #######################
+        
+# Here's where we output the big list of matching dirs and filenames        
+        
+        for i in range(1,len(big2DList)):
+            print big2DList[i][0], #Print list of Directories containing search terms
+            for x in range(1, len(big2DList[i])):
+                print big2DList[i][x]
+            #print("\n")
+        
+
+# Let this madness end:
+except KeyboardInterrupt:
+    print "\nThanks for playing!"
+exit(1)
+
+# When found all you can find:
+# Display Count, Path, Filename, Date in scrollable finder-type window, sortable by date, path, filename
+# Ability to open file location from list selection And to open file from list selection if desired (like easyfind)
+
+# Option to search within search results, search again with new term, save/print results? 
+
+
+
+
+# Code to add widgets will go here...
+

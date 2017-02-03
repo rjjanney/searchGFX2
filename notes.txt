@@ -1,0 +1,24 @@
+Notes:
+
+To get file info (to possibly sort by date created or accessed, once search has thinned out the possibilities):
+
+--------------------
+
+import os
+import datetime
+def modification_date(filename):
+    t = os.path.getmtime(filename)
+    return datetime.datetime.fromtimestamp(t)
+
+EXAMPLE:
+>>> d = modification_date('/var/log/syslog')
+>>> print d
+2009-10-06 10:50:01
+>>> print repr(d)
+datetime.datetime(2009, 10, 6, 10, 50, 1)
+
+
+More Info:
+https://docs.python.org/2/library/datetime.html
+
+
