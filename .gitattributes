@@ -11,3 +11,4 @@
 .gitignore text
 *.md text
 *.xml linguist-vendored
+*.html linguist-vendored
